@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="lab3.StudentForm"
+             Title="Дані студента">
+    <ScrollView>
+        <VerticalStackLayout Spacing="10" Padding="20">
+
+            <Label Text="Основна інформація" FontAttributes="Bold" FontSize="16"/>
+            <Entry x:Name="EntryName" Placeholder="ПІБ" />
+            <Entry x:Name="EntryFaculty" Placeholder="Факультет" />
+            <Entry x:Name="EntryDepartment" Placeholder="Кафедра" />
+            <Entry x:Name="EntryYear" Keyboard="Numeric" Placeholder="Курс" />
+
+            <BoxView HeightRequest="1" Color="Gray" Margin="0,10"/>
+
+            <Label Text="Список дисциплін студента:" FontAttributes="Bold" FontSize="16"/>
+            <CollectionView x:Name="ListDisciplines" HeightRequest="150" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="*, Auto" Padding="5">
+                            <Label Grid.Column="0" VerticalOptions="Center">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding Title}" FontAttributes="Bold"/>
+                                        <Span Text=" ("/>
+                                        <Span Text="{Binding ControlType}"/>
+                                        <Span Text=": "/>
+                                        <Span Text="{Binding Grade}"/>
+                                        <Span Text=")"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <HorizontalStackLayout Grid.Column="1" Spacing="5">
+                                <Button Text="edit" Clicked="OnEditDiscClicked" CommandParameter="{Binding .}" 
+                                        HeightRequest="30" Padding="0" WidthRequest="30"/>
+                                <Button Text="del" Clicked="OnDeleteDiscClicked" CommandParameter="{Binding .}" 
+                                        HeightRequest="30" Padding="0" WidthRequest="30"/>
+                            </HorizontalStackLayout>
+                            <BoxView Grid.ColumnSpan="2" HeightRequest="1" Color="LightGray" VerticalOptions="End"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Text="Додати/Редагувати дисципліну:" FontAttributes="Bold" Margin="0,10,0,0"/>
+
+            <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto" ColumnSpacing="10" RowSpacing="10">
+                <Entry x:Name="EntryDiscTitle" Placeholder="Назва предмету" Grid.Row="0" Grid.Column="0"/>
+                <Entry x:Name="EntryDiscGrade" Placeholder="Бал (0-100)" Keyboard="Numeric" Grid.Row="0" Grid.Column="1"/>
+
+                <Picker x:Name="PickerControl" Title="Тип контролю" Grid.Row="1" Grid.Column="0">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Іспит</x:String>
+                            <x:String>Залік</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+                <Entry x:Name="EntryDiscDate" Placeholder="Дата" Grid.Row="1" Grid.Column="1"/>
+            </Grid>
+
+            <Button Text="Додати предмет у список" Clicked="OnAddDiscClicked" BackgroundColor="#007ACC"/>
+
+            <HorizontalStackLayout Spacing="20" HorizontalOptions="Center" Margin="0,30,0,0">
+                <Button Text="Зберегти" Clicked="OnSaveClicked" BackgroundColor="#2E8B57" TextColor="White" WidthRequest="150" FontAttributes="Bold"/>
+                <Button Text="Скасувати" Clicked="OnCancelClicked" BackgroundColor="#B22222" TextColor="White" WidthRequest="100"/>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

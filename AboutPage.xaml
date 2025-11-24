@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="lab3.AboutPage"
+             Title="Про програму">
+    <VerticalStackLayout Spacing="10" Padding="30" VerticalOptions="Center">
+        <Label Text="Автор: Сухомлін Олександра" FontSize="18" HorizontalOptions="Center" />
+        <Label Text="Курс: 2" FontSize="18" HorizontalOptions="Center" />
+        <Label Text="Група: К-24" FontSize="18" HorizontalOptions="Center" />
+        <Label Text="Рік: 2025" FontSize="18" HorizontalOptions="Center" />
+        <Label Text="Обробка файлів у форматі JSON (Диспетчер для JSON)" FontSize="18" HorizontalOptions="Center" />
+        <Button Text="Назад" Clicked="OnBackClicked" Margin="0,20,0,0"/>
+    </VerticalStackLayout>
+</ContentPage>

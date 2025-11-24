@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="lab3.MainPage"
+             Title="Диспетчер Студентів JSON">
+
+    <Grid RowDefinitions="Auto, Auto, *, Auto" Padding="10" RowSpacing="10">
+
+        <HorizontalStackLayout Grid.Row="0" Spacing="10" HorizontalOptions="Center">
+            <Button Text="Відкрити JSON" Clicked="BtnClickLoadJson" />
+            <Button Text="Зберегти JSON" Clicked="BtnClickSaveJson" />
+            <Button Text="Про програму" Clicked="BtnClickAbout"/>
+            <Button Text="Вихід" Clicked="BtnClickExit" BackgroundColor="DarkRed"/>
+        </HorizontalStackLayout>
+
+        <Border Grid.Row="1" StrokeThickness="1" Padding="10">
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Параметри пошуку" FontAttributes="Bold" FontSize="14"/>
+
+                <Grid ColumnDefinitions="*, *, *" RowDefinitions="Auto, Auto" ColumnSpacing="10" RowSpacing="10">
+                    <Entry x:Name="EntrySearchName" Placeholder="ПІП" Grid.Row="0" Grid.Column="0"/>
+                    <Picker x:Name="PickerSearchFaculty" Title="Оберіть факультет" Grid.Row="0" Grid.Column="1"/>
+                    <Entry x:Name="EntrySearchYear" Placeholder="Курс" Keyboard="Numeric" Grid.Row="0" Grid.Column="2"/>
+
+                    <Entry x:Name="EntrySearchDept" Placeholder="Кафедра" Grid.Row="1" Grid.Column="0"/>
+                    <Entry x:Name="EntrySearchDisc" Placeholder="Назва дисципліни" Grid.Row="1" Grid.Column="1"/>
+
+                    <HorizontalStackLayout Grid.Row="1" Grid.Column="2" Spacing="10" HorizontalOptions="End">
+                        <Button Text="Знайти" Clicked="BtnClickSearch" HeightRequest="40"/>
+                        <Button Text="Очистити" Clicked="BtnClickClear" HeightRequest="40"/>
+                    </HorizontalStackLayout>
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+
+        <CollectionView x:Name="StudentsList" Grid.Row="2" SelectionMode="None">
+            <CollectionView.Header>
+                <Grid ColumnDefinitions="1.5*, 1*, 1*, 0.5*, 2.5*, 1.2*" Padding="5">
+                    <Label Text="ПІБ" FontAttributes="Bold" Grid.Column="0"/>
+                    <Label Text="Факультет" FontAttributes="Bold" Grid.Column="1"/>
+                    <Label Text="Кафедра" FontAttributes="Bold" Grid.Column="2"/>
+                    <Label Text="Курс" FontAttributes="Bold" Grid.Column="3"/>
+                    <Label Text="Предмети" FontAttributes="Bold" Grid.Column="4"/>
+                    <Label Text="Дії" FontAttributes="Bold" Grid.Column="5" HorizontalOptions="Center"/>
+                </Grid>
+            </CollectionView.Header>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="1.5*, 1*, 1*, 0.5*, 2.5*, 1.2*" Padding="5">
+
+                        <Label Text="{Binding Name}" Grid.Column="0" VerticalOptions="Center"/>
+                        <Label Text="{Binding Faculty}" Grid.Column="1" VerticalOptions="Center"/>
+                        <Label Text="{Binding Department}" Grid.Column="2" VerticalOptions="Center"/>
+                        <Label Text="{Binding Year}" Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Label Text="{Binding DisciplinesString}" Grid.Column="4" VerticalOptions="Center"/>
+
+                        <HorizontalStackLayout Grid.Column="5" Spacing="5" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Button Text="edit" 
+                                    Clicked="OnEditStudentClicked"
+                                    CommandParameter="{Binding .}"
+                                    WidthRequest="40" 
+                                    HeightRequest="35" 
+                                    Padding="0"/>
+
+                            <Button Text="del" 
+                                    Clicked="OnDeleteStudentClicked"
+                                    CommandParameter="{Binding .}"
+                                    WidthRequest="40" 
+                                    HeightRequest="35"
+                                    Padding="0"/>
+                        </HorizontalStackLayout>
+
+                        <BoxView Grid.ColumnSpan="6" HeightRequest="1" Color="#E0E0E0" VerticalOptions="End"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Grid Grid.Row="3" ColumnDefinitions="*, Auto">
+            <Button Grid.Column="0" 
+                    Text="Додати нового студента" 
+                    Clicked="BtnClickAdd" 
+                    HorizontalOptions="Start" 
+                    WidthRequest="200"/>
+
+            <Label x:Name="LblStatus" Grid.Column="1" Text="Файл не обрано" 
+                   VerticalOptions="Center" FontSize="12"/>
+        </Grid>
+
+    </Grid>
+
+</ContentPage>
