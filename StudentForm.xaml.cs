@@ -39,15 +39,36 @@ public partial class StudentForm : ContentPage
             await DisplayAlert("Помилка", "Введіть назву предмету", "OK");
             return;
         }
-        int.TryParse(EntryDiscGrade.Text, out int grade);
+
+        if (!int.TryParse(EntryDiscGrade.Text, out int grade) || grade < 0 || grade > 100)
+        {
+            await DisplayAlert("Помилка", "Бал має бути числом від 0 до 100!", "OK");
+            return;
+        }
+
+        string dateString = EntryDiscDate.Text;
+        if (string.IsNullOrWhiteSpace(dateString))
+        {
+            dateString = DateTime.Now.ToString("dd.MM.yyyy");
+        }
+        else
+        {
+            if (!DateTime.TryParse(dateString, out DateTime tempDate))
+            {
+                await DisplayAlert("Помилка", "Некоректна дата! Введіть у форматі дд.мм.рррр", "OK");
+                return;
+            }
+            dateString = tempDate.ToString("dd.MM.yyyy");
+        }
+
         string control = PickerControl.SelectedItem?.ToString() ?? "Залік";
-        string date = EntryDiscDate.Text ?? DateTime.Now.ToShortDateString();
+
         _tempDisciplines.Add(new Discipline
         {
             Title = EntryDiscTitle.Text,
             Grade = grade,
             ControlType = control,
-            Date = date
+            Date = dateString
         });
         EntryDiscTitle.Text = "";
         EntryDiscGrade.Text = "";
@@ -86,7 +107,20 @@ public partial class StudentForm : ContentPage
         StudentData.Name = EntryName.Text;
         StudentData.Faculty = EntryFaculty.Text;
         StudentData.Department = EntryDepartment.Text;
-        if (int.TryParse(EntryYear.Text, out int y)) StudentData.Year = y;
+        if (int.TryParse(EntryYear.Text, out int y))
+        {
+            if (y < 1 || y > 6)
+            {
+                await DisplayAlert("Помилка", "Курс має бути від 1 до 6", "OK");
+                return;
+            }
+            StudentData.Year = y;
+        }
+        else
+        {
+            await DisplayAlert("Помилка", "Курс має бути числом", "OK");
+            return;
+        }
         StudentData.Disciplines = _tempDisciplines.ToList();
         IsSaveClicked = true;
         await Navigation.PopModalAsync();

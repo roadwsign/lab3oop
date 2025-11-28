@@ -58,7 +58,7 @@
                         </x:Array>
                     </Picker.ItemsSource>
                 </Picker>
-                <Entry x:Name="EntryDiscDate" Placeholder="Дата" Grid.Row="1" Grid.Column="1"/>
+                <Entry x:Name="EntryDiscDate" Placeholder="Дата (дд.мм.рррр)" Grid.Row="1" Grid.Column="1"/>
             </Grid>
 
             <Button Text="Додати предмет у список" Clicked="OnAddDiscClicked" BackgroundColor="#007ACC"/>
